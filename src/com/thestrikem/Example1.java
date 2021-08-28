@@ -5,7 +5,7 @@ import java.util.Arrays;
 
 public class Example1 {
     public static void main(String[] args) throws ClassNotFoundException {
-        SmartPhoneAnnotation xiaomiAnnotation = getParamsOfSmartPhoneAnnotation("Xiaomi");
+        SmartPhoneAnnotation xiaomiAnnotation = getParamsOfSmartPhoneAnnotation(Xiaomi.class);
         SmartPhoneAnnotation androidAnnotation = getParamsOfSmartPhoneAnnotation("Android");
         SmartPhoneAnnotation iphoneAnnotation = getParamsOfSmartPhoneAnnotation("Iphone");
         Arrays.stream(new SmartPhoneAnnotation[]{xiaomiAnnotation, androidAnnotation, iphoneAnnotation})
@@ -17,6 +17,13 @@ public class Example1 {
     public static SmartPhoneAnnotation getParamsOfSmartPhoneAnnotation(String className)
             throws ClassNotFoundException {
         Class someClass = Class.forName("com.thestrikem."+className);
+        Annotation annotation = someClass.getAnnotation(SmartPhoneAnnotation.class);
+        SmartPhoneAnnotation result = (SmartPhoneAnnotation) annotation;
+        return result;
+    }
+
+    public static SmartPhoneAnnotation getParamsOfSmartPhoneAnnotation(Class inputClass) {
+        Class someClass = inputClass;
         Annotation annotation = someClass.getAnnotation(SmartPhoneAnnotation.class);
         SmartPhoneAnnotation result = (SmartPhoneAnnotation) annotation;
         return result;
