@@ -1,13 +1,25 @@
 package com.thestrikem;
 
 import java.lang.annotation.*;
+import java.util.Arrays;
 
 public class Example1 {
     public static void main(String[] args) throws ClassNotFoundException {
-        Class xiaomiClass = Class.forName("com.thestrikem.Xiaomi");
-        Annotation annotation = xiaomiClass.getAnnotation(SmartPhoneAnnotation.class);
-        SmartPhoneAnnotation sm = (SmartPhoneAnnotation) annotation;
-        System.out.println(String.format("Model %s was created at %s", sm.companyName(), sm.createdAt()));
+        SmartPhoneAnnotation xiaomiAnnotation = getParamsOfSmartPhoneAnnotation("Xiaomi");
+        SmartPhoneAnnotation androidAnnotation = getParamsOfSmartPhoneAnnotation("Android");
+        SmartPhoneAnnotation iphoneAnnotation = getParamsOfSmartPhoneAnnotation("Iphone");
+        Arrays.stream(new SmartPhoneAnnotation[]{xiaomiAnnotation, androidAnnotation, iphoneAnnotation})
+                .forEach(item -> System.out.println(
+                        String.format("Company %s was created at %s", item.companyName(), item.createdAt())
+                ));
+    }
+
+    public static SmartPhoneAnnotation getParamsOfSmartPhoneAnnotation(String className)
+            throws ClassNotFoundException {
+        Class someClass = Class.forName("com.thestrikem."+className);
+        Annotation annotation = someClass.getAnnotation(SmartPhoneAnnotation.class);
+        SmartPhoneAnnotation result = (SmartPhoneAnnotation) annotation;
+        return result;
     }
 }
 
